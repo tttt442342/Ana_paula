@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Para Ana Paula 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ff6fa5; --pink2:#ffb3d1; --lav:#c9b3ff;
+    --night:#1a1240; --cream:#fff6fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:'Baloo 2',system-ui,sans-serif;
+    background:radial-gradient(ellipse at top,#3a2575 0%,var(--night) 60%,#0d0826 100%);
+    color:var(--cream);
+    user-select:none;-webkit-user-select:none;
+  }
+  #sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:tw 3s infinite ease-in-out}
+  @keyframes tw{0%,100%{opacity:.15}50%{opacity:1}}
+  .floaty{position:absolute;bottom:-50px;animation:up linear forwards;opacity:.9}
+  @keyframes up{to{transform:translateY(-120vh) rotate(25deg);opacity:0}}
+
+  .screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;z-index:1}
+  .screen.active{display:flex}
+  .card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,182,213,.35);
+    border-radius:28px;padding:28px 22px;max-width:460px;width:100%;
+    text-align:center;box-shadow:0 10px 40px rgba(255,111,165,.25);
+    animation:pop .6s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes pop{from{transform:scale(.8);opacity:0}}
+  h1{font-family:'Dancing Script',cursive;font-size:clamp(2.6rem,11vw,3.6rem);color:var(--pink2);
+     text-shadow:0 0 18px rgba(255,111,165,.7);line-height:1.1;margin-bottom:10px}
+  h2{font-size:clamp(1.4rem,6vw,1.8rem);color:var(--pink2);line-height:1.2;margin-bottom:10px}
+  p{font-size:1.08rem;line-height:1.5;margin-bottom:12px;color:#fde9f3}
+  .soft{color:var(--lav)}
+  .btn{
+    font-family:inherit;font-weight:800;font-size:1.15rem;border:none;border-radius:999px;
+    padding:14px 30px;background:linear-gradient(135deg,#ff6fa5,#ff9ecb);color:#fff;
+    box-shadow:0 6px 0 #c94b7f,0 10px 25px rgba(255,111,165,.4);cursor:pointer;
+    transition:transform .1s, box-shadow .1s;margin-top:8px;
+  }
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c94b7f}
+
+  /* caminito tierra - luna */
+  .trip{position:relative;height:64px;margin:14px 0 18px;border-radius:999px;
+        background:rgba(255,255,255,.06);border:1px dashed rgba(255,182,213,.35)}
+  .trip .earth,.trip .moon{position:absolute;top:50%;transform:translateY(-50%);font-size:34px}
+  .trip .earth{left:8px}.trip .moon{right:8px;filter:drop-shadow(0 0 10px #fff6b0)}
+  .walker{position:absolute;top:50%;margin-top:-18px;font-size:30px;animation:walk 9s linear infinite}
+  .walker span{display:inline-block;animation:bob .35s ease-in-out infinite alternate}
+  @keyframes walk{
+    0%{left:14%;transform:scaleX(-1)} 48%{left:74%;transform:scaleX(-1)}
+    50%{left:74%;transform:scaleX(1)} 98%{left:14%;transform:scaleX(1)} 100%{left:14%;transform:scaleX(-1)}
+  }
+  @keyframes bob{to{transform:translateY(-4px)}}
+
+  /* juego */
+  #game{padding:0}
+  #stage{position:absolute;inset:0}
+  #cv{width:100%;height:100%;display:block;touch-action:none}
+  #hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+       padding:12px 14px;font-weight:800;font-size:1.05rem;pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+  #hud .pill{background:rgba(0,0,0,.28);padding:4px 12px;border-radius:999px}
+  #bar{position:absolute;top:52px;left:14px;right:14px;display:none;align-items:center;gap:8px;pointer-events:none}
+  #bar .track{flex:1;height:10px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
+  #fill{height:100%;width:0;background:linear-gradient(90deg,#ff9ecb,#fff3a8);border-radius:999px}
+  #overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:16px;
+           background:rgba(13,8,38,.55)}
+  #overlay.show{display:flex}
+  #ovEmoji{font-size:54px;margin-bottom:6px}
+
+  /* pregunta */
+  .tiny{font-size:.85rem;color:var(--lav);margin-top:-4px;margin-bottom:22px}
+  .btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;min-height:70px}
+  #yes{position:relative;z-index:5;transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+  #no{background:linear-gradient(135deg,#8c86a8,#b3aecb);box-shadow:0 6px 0 #5f5a78;z-index:6;
+      transition:left .25s ease, top .25s ease, transform .25s ease}
+  #teasing{min-height:26px;margin-top:18px;font-weight:700;color:var(--pink2)}
+  .big-emoji{font-size:58px;margin-bottom:6px}
+  .firma{font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--pink2);margin-top:6px}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+
+<!-- INTRO -->
+<section id="intro" class="screen active">
+  <div class="card">
+    <h1>Para Ana Paula</h1>
+    <div class="trip">
+      <span class="earth">🌍</span>
+      <div class="walker"><span>🐢</span></div>
+      <span class="moon">🌕</span>
+    </div>
+    <p>Te quiero desde aquí hasta la luna… <b>con pasitos de tortuga</b> 🐢, ida y vuelta.</p>
+    <p>Sé que aún nos estamos conociendo, pero estar a tu lado me hace muy feliz, aunque a veces no lo sepa demostrar bien.</p>
+    <p class="soft">Te hice un par de jueguitos. Pasa los dos niveles y al final te espera una preguntita 💌</p>
+    <button class="btn" id="startBtn">Empezar ✨</button>
+  </div>
+</section>
+
+<!-- JUEGO -->
+<section id="game" class="screen">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="hud"><div class="pill" id="hudL"></div><div class="pill" id="hudR"></div></div>
+    <div id="bar"><span>🌍</span><div class="track"><div id="fill"></div></div><span>🌕</span></div>
+    <div id="overlay">
+      <div class="card">
+        <div id="ovEmoji"></div>
+        <h2 id="ovTitle"></h2>
+        <p id="ovText"></p>
+        <button class="btn" id="ovBtn"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTA -->
+<section id="question" class="screen">
+  <div class="card">
+    <div class="big-emoji">🐢💌🌙</div>
+    <h2>Ana Paula… ¿tú también me quieres?</h2>
+    <p class="tiny">"dale al NO para que veas lo que sucede"</p>
+    <div class="btns">
+      <button class="btn" id="yes">SI MI PRECIOSO 💖</button>
+      <button class="btn" id="no">NOO, JAMASSS</button>
+    </div>
+    <div id="teasing"></div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section id="final" class="screen">
+  <div class="card">
+    <div class="big-emoji">🥰🐢🌕</div>
+    <h1>¡Sabía que sí!</h1>
+    <p>Te quiero desde aquí hasta la luna, con pasitos de tortuga, ida y vuelta.</p>
+    <p>Espero que te haya gustado, <b>Ana Paula</b>. Lo hice yo solito, con mucho amor, para que no te aburras en tu viajecito ✈️💖</p>
+    <div class="firma">— con cariño, para ti</div>
+    <button class="btn" id="againBtn" style="margin-top:16px">Volver a jugar 🔁</button>
+  </div>
+</section>
+
+<script>
+const $ = id => document.getElementById(id);
+const pick = a => a[Math.floor(Math.random()*a.length)];
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $(id).classList.add('active');
+}
+
+/* ---------- cielo de fondo ---------- */
+const sky = $('sky');
+for(let i=0;i<70;i++){
+  const s=document.createElement('div'); s.className='star';
+  const r=Math.random()*2+1;
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${r}px;height:${r}px;animation-delay:${Math.random()*3}s`;
+  sky.appendChild(s);
+}
+function floatHeart(){
+  const e=document.createElement('span'); e.className='floaty';
+  e.textContent=pick(['💖','💕','💗','🌸','✨','🐢','🌙','💞']);
+  const d=6+Math.random()*6;
+  e.style.cssText=`left:${Math.random()*100}%;font-size:${16+Math.random()*22}px;animation-duration:${d}s`;
+  sky.appendChild(e); setTimeout(()=>e.remove(), d*1000);
+}
+let heartTimer=setInterval(floatHeart,900);
+
+/* ---------- motor del juego ---------- */
+const cv=$('cv'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1;
+function resize(){
+  const r=$('stage').getBoundingClientRect();
+  DPR=Math.min(window.devicePixelRatio||1,2);
+  W=r.width; H=r.height;
+  cv.width=W*DPR; cv.height=H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+addEventListener('resize',()=>{ if($('game').classList.contains('active')) resize(); });
+
+const pointer={x:null,y:null};
+function setP(e){ const r=cv.getBoundingClientRect(); pointer.x=e.clientX-r.left; pointer.y=e.clientY-r.top; }
+cv.addEventListener('pointerdown',setP);
+cv.addEventListener('pointermove',setP);
+const keys={};
+addEventListener('keydown',e=>{
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){ keys[e.key]=true; pointer.x=pointer.y=null; e.preventDefault(); }
+});
+addEventListener('keyup',e=>{ keys[e.key]=false; });
+
+function emoji(ch,x,y,size,rot=0,flip=false){
+  ctx.save(); ctx.translate(x,y); if(rot) ctx.rotate(rot); if(flip) ctx.scale(-1,1);
+  ctx.font=`${size}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(ch,0,0); ctx.restore();
+}
+
+let level=1, running=false, gameActive=false;
+let items=[], particles=[], lives=3, score=0, goal=15, stars=0;
+let player={x:0,y:0,s:60}, spawnT=0, t=0, now=0, shakeT=0, invUntil=0, progress=0, faceRight=true;
+const DUR2=32;
+const bgStars=Array.from({length:90},()=>({x:Math.random(),y:Math.random(),r:Math.random()*2+.6,p:Math.random()*6,sp:.3+Math.random()*1.2}));
+
+function burst(x,y,chars,n=8){
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2, v=60+Math.random()*140;
+    particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-40,life:1,ch:pick(chars),s:14+Math.random()*12});
+  }
+}
+
+/* ---- Nivel 1: lluvia de corazones ---- */
+function setupL1(){
+  level=1; items=[]; particles=[]; lives=3; score=0; t=0; spawnT=.5;
+  player={x:W/2,y:H-70,s:Math.min(66,Math.max(48,W*.14))};
+  pointer.x=pointer.y=null; $('bar').style.display='none';
+}
+function update1(dt){
+  t+=dt; spawnT-=dt;
+  player.y=H-70;
+  if(spawnT<=0){
+    spawnT=Math.max(.42,.85-t*.012);
+    const bad=Math.random()<.27;
+    items.push({x:30+Math.random()*(W-60),y:-30,v:130+Math.random()*80+t*3,
+      ch:bad?pick(['💔','🌧️']):pick(['❤️','💖','💕','💗','🌸']),bad,r:0,vr:(Math.random()-.5)*2,s:36});
+  }
+  const ox=player.x;
+  if(keys.ArrowLeft) player.x-=430*dt;
+  if(keys.ArrowRight) player.x+=430*dt;
+  if(pointer.x!=null) player.x+=(pointer.x-player.x)*Math.min(1,dt*12);
+  player.x=Math.max(30,Math.min(W-30,player.x));
+  if(Math.abs(player.x-ox)>.5) faceRight=player.x>ox;
+
+  const bx=player.x, by=player.y-player.s*.55;
+  for(let i=items.length-1;i>=0;i--){
+    const it=items[i]; it.y+=it.v*dt; it.r+=it.vr*dt;
+    if(Math.hypot(it.x-bx,it.y-by)<player.s*.5+12){
+      items.splice(i,1);
+      if(it.bad){ lives--; shakeT=.3; burst(it.x,it.y,['💨','💧'],6); }
+      else { score++; burst(it.x,it.y,['💖','✨','💕'],8); }
+      continue;
+    }
+    if(it.y>H+40) items.splice(i,1);
+  }
+  if(score>=goal){ running=false; burst(player.x,player.y-40,['💖','✨','🌸','💕'],30); winL1(); }
+  else if(lives<=0){ running=false; lose(); }
+}
+function draw1(){
+  emoji('🌙',W-46,70,46);
+  ctx.fillStyle='#3b2a6e'; ctx.beginPath(); ctx.ellipse(W/2,H+30,W*.85,80,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#4d3887'; ctx.beginPath(); ctx.ellipse(W*.2,H+40,W*.5,70,0,0,Math.PI*2); ctx.fill();
+  for(const it of items) emoji(it.ch,it.x,it.y,it.s,it.r*.3);
+  const bob=Math.sin(now*.012)*3;
+  emoji('🧺',player.x,player.y-player.s*.55+bob,player.s*.72);
+  emoji('🐢',player.x,player.y+bob,player.s,0,faceRight);
+  $('hudL').textContent=`💖 ${score} / ${goal}`;
+}
+
+/* ---- Nivel 2: pasitos hasta la luna ---- */
+function setupL2(){
+  level=2; items=[]; particles=[]; lives=3; t=0; spawnT=1.2; invUntil=0; progress=0; stars=0;
+  player={x:Math.max(60,W*.18),y:H/2,s:Math.min(60,Math.max(44,H*.1))};
+  pointer.x=pointer.y=null; $('bar').style.display='flex';
+}
+function update2(dt){
+  t+=dt; progress=Math.min(1,t/DUR2);
+  spawnT-=dt;
+  if(spawnT<=0 && progress<.92){
+    spawnT=.95-progress*.4+Math.random()*.35;
+    const star=Math.random()<.25;
+    items.push({x:W+40,y:90+Math.random()*(H-130),v:W*.32+progress*W*.28+Math.random()*60,
+      ch:star?'⭐':pick(['☄️','🪨','🌑']),bad:!star,s:star?30:38+Math.random()*14,r:0,vr:(Math.random()-.5)*3});
+  }
+  if(keys.ArrowUp) player.y-=380*dt;
+  if(keys.ArrowDown) player.y+=380*dt;
+  if(pointer.y!=null) player.y+=(pointer.y-player.y)*Math.min(1,dt*9);
+  player.y=Math.max(90,Math.min(H-30,player.y));
+  if(Math.random()<.3) particles.push({x:player.x-player.s*.45,y:player.y+(Math.random()-.5)*10,vx:-80,vy:(Math.random()-.5)*30,life:.7,ch:pick(['✨','💗']),s:12});
+
+  for(let i=items.length-1;i>=0;i--){
+    const it=items[i]; it.x-=it.v*dt; it.r+=it.vr*dt;
+    if(Math.hypot(it.x-player.x,it.y-player.y)<player.s*.38+it.s*.38){
+      if(!it.bad){ stars++; items.splice(i,1); burst(it.x,it.y,['⭐','✨'],8); continue; }
+      if(t>invUntil){ lives--; invUntil=t+1.3; shakeT=.35; items.splice(i,1); burst(player.x,player.y,['💫','💨'],8); continue; }
+    }
+    if(it.x<-60) items.splice(i,1);
+  }
+  if(lives<=0){ running=false; lose(); }
+  else if(progress>=1){ running=false; burst(player.x,player.y,['💖','🌕','✨','⭐'],35); winL2(); }
+}
+function draw2(){
+  const ep=1-progress;
+  if(ep>.03){ ctx.globalAlpha=ep; emoji('🌍',30*ep,H-30,60+140*ep); ctx.globalAlpha=1; }
+  const ms=50+progress*progress*H*.8, mx=W-ms*.25+(1-progress)*10, my=H*.52;
+  const g=ctx.createRadialGradient(mx,my,ms*.2,mx,my,ms*1.1);
+  g.addColorStop(0,'rgba(255,246,176,.35)'); g.addColorStop(1,'rgba(255,246,176,0)');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mx,my,ms*1.1,0,Math.PI*2); ctx.fill();
+  emoji('🌕',mx,my,ms);
+  for(const it of items) emoji(it.ch,it.x,it.y,it.s,it.r*.4);
+  const blink = t<invUntil && Math.floor(now/100)%2===0;
+  if(!blink) emoji('🐢',player.x,player.y+Math.sin(now*.01)*3,player.s,-.12,true);
+  $('hudL').textContent=`⭐ ${stars}`;
+  $('fill').style.width=(progress*100)+'%';
+}
+
+/* ---- dibujo general ---- */
+function drawBg(){
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#241654'); g.addColorStop(1,'#0e0829');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#fff';
+  for(const s of bgStars){
+    let x=s.x*W;
+    if(level===2) x=((x-t*s.sp*70)%W+W)%W;
+    ctx.globalAlpha=.3+.7*Math.abs(Math.sin(now*.002+s.p));
+    ctx.fillRect(x,s.y*H,s.r,s.r);
+  }
+  ctx.globalAlpha=1;
+}
+function drawParticles(dt){
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i]; p.life-=dt; if(p.life<=0){particles.splice(i,1);continue;}
+    p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=120*dt;
+    ctx.globalAlpha=Math.max(0,p.life); emoji(p.ch,p.x,p.y,p.s); ctx.globalAlpha=1;
+  }
+}
+let last=0;
+function loop(ts){
+  if(!gameActive) return;
+  const dt=Math.min(.033,((ts-last)/1000)||0); last=ts; now=ts;
+  if(running){ level===1?update1(dt):update2(dt); }
+  ctx.save();
+  if(shakeT>0){ shakeT-=dt; ctx.translate((Math.random()-.5)*10,(Math.random()-.5)*10); }
+  drawBg();
+  level===1?draw1():draw2();
+  drawParticles(dt);
+  ctx.restore();
+  $('hudR').textContent='💗'.repeat(Math.max(0,lives))+'🤍'.repeat(3-Math.max(0,lives));
+  requestAnimationFrame(loop);
+}
+
+/* ---- pantallas entre niveles ---- */
+let ovAction=null;
+function overlay(emo,title,text,btn,action){
+  $('ovEmoji').textContent=emo; $('ovTitle').textContent=title;
+  $('ovText').innerHTML=text; $('ovBtn').textContent=btn;
+  ovAction=action; $('overlay').classList.add('show');
+}
+$('ovBtn').onclick=()=>{ $('overlay').classList.remove('show'); const a=ovAction; ovAction=null; a&&a(); };
+
+function introL1(){
+  setupL1();
+  overlay('🧺🐢','Nivel 1: Lluvia de corazones',
+    'Mueve a la tortuguita deslizando tu dedo (o con las flechas) y atrapa <b>15 corazones</b> para ti, Ana Paula.<br>Esquiva los 💔 y las nubecitas 🌧️.',
+    '¡Jugar! 💖',()=>{ setupL1(); running=true; });
+}
+function winL1(){
+  overlay('💖','¡Lo lograste, Ana Paula!',
+    'Atrapaste todos los corazones… aunque el mío ya lo tenías 🙈',
+    'Siguiente nivel ➜',introL2);
+}
+function introL2(){
+  setupL2();
+  overlay('🐢🌕','Nivel 2: Pasitos hasta la luna',
+    'Guía a la tortuguita hasta la luna. Desliza tu dedo arriba y abajo para esquivar los meteoritos ☄️🪨.<br>Las ⭐ son de regalo.',
+    '¡Despegar! 🚀',()=>{ setupL2(); running=true; });
+}
+function winL2(){
+  overlay('🌕✨','¡Llegaste a la luna!',
+    'Así de lejos te quiero, Ana Paula… y de vuelta, con pasitos de tortuga 🐢',
+    'Una última cosita… 💌',()=>{ gameActive=false; show('question'); });
+}
+function lose(){
+  overlay('🥺','¡Uy, casi!',
+    'La tortuguita se tropezó, pero no se rinde. ¡Otra vez, tú puedes!',
+    'Reintentar 🔁',()=>{ level===1?setupL1():setupL2(); running=true; });
+}
+
+$('startBtn').onclick=()=>{
+  show('game'); resize(); gameActive=true; last=performance.now();
+  introL1(); requestAnimationFrame(loop);
+};
+
+/* ---------- la pregunta ---------- */
+let noScale=1, yesScale=1;
+const teases=['¿Segura? 🥺','La tortuguita está triste 🐢💧','Ese botón no funciona 😌','Mejor el otro 👉','Ya casi desaparece jaja','Mira qué grande está el SÍ 💖','Tú sabes cuál es 😏'];
+let ti=0;
+function runAway(e){
+  if(e) e.preventDefault();
+  const no=$('no'), yes=$('yes');
+  if(no.parentElement!==document.body){
+    const r=no.getBoundingClientRect();
+    document.body.appendChild(no);
+    no.style.position='fixed'; no.style.left=r.left+'px'; no.style.top=r.top+'px';
+    no.style.transformOrigin='top left';
+  }
+  noScale=Math.max(.22,noScale*.8);
+  yesScale=Math.min(3,yesScale+.22);
+  const bw=no.offsetWidth*noScale, bh=no.offsetHeight*noScale;
+  no.style.left=(10+Math.random()*Math.max(0,innerWidth-bw-20))+'px';
+  no.style.top=(10+Math.random()*Math.max(0,innerHeight-bh-20))+'px';
+  no.style.transform=`scale(${noScale})`;
+  yes.style.transform=`scale(${yesScale})`;
+  $('teasing').textContent=teases[ti++%teases.length];
+}
+$('no').addEventListener('pointerenter',e=>{ if(e.pointerType==='mouse') runAway(); });
+$('no').addEventListener('pointerdown',runAway);
+$('no').addEventListener('click',runAway);
+
+$('yes').onclick=()=>{
+  const no=$('no'); no.style.display='none';
+  show('final');
+  clearInterval(heartTimer);
+  for(let i=0;i<40;i++) setTimeout(floatHeart,i*60);
+  heartTimer=setInterval(floatHeart,220);
+};
+$('againBtn').onclick=()=>location.reload();
+</script>
+</body>
+</html>
