@@ -2,22 +2,20 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1a1240">
 <title>Para Ana Paula 🌙</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --pink:#ff6fa5; --pink2:#ffb3d1; --lav:#c9b3ff;
-    --night:#1a1240; --cream:#fff6fb;
-  }
+  :root{ --pink:#ff6fa5; --pink2:#ffb3d1; --lav:#c9b3ff; --night:#1a1240; --cream:#fff6fb; }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%;overflow:hidden}
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
   body{
     font-family:'Baloo 2',system-ui,sans-serif;
     background:radial-gradient(ellipse at top,#3a2575 0%,var(--night) 60%,#0d0826 100%);
-    color:var(--cream);
-    user-select:none;-webkit-user-select:none;
+    color:var(--cream);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
   }
+  button{touch-action:manipulation}
   #sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
   .star{position:absolute;background:#fff;border-radius:50%;animation:tw 3s infinite ease-in-out}
   @keyframes tw{0%,100%{opacity:.15}50%{opacity:1}}
@@ -27,18 +25,16 @@
   .screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;z-index:1}
   .screen.active{display:flex}
   .card{
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    border:1px solid rgba(255,182,213,.35);
-    border-radius:28px;padding:28px 22px;max-width:460px;width:100%;
-    text-align:center;box-shadow:0 10px 40px rgba(255,111,165,.25);
-    animation:pop .6s cubic-bezier(.2,1.4,.4,1);
+    background:rgba(255,255,255,.09);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,182,213,.35);border-radius:28px;padding:26px 20px;max-width:460px;width:100%;
+    max-height:calc(100% - 8px);overflow-y:auto;
+    text-align:center;box-shadow:0 10px 40px rgba(255,111,165,.25);animation:pop .6s cubic-bezier(.2,1.4,.4,1);
   }
   @keyframes pop{from{transform:scale(.8);opacity:0}}
-  h1{font-family:'Dancing Script',cursive;font-size:clamp(2.6rem,11vw,3.6rem);color:var(--pink2);
+  h1{font-family:'Dancing Script',cursive;font-size:clamp(2.5rem,11vw,3.6rem);color:var(--pink2);
      text-shadow:0 0 18px rgba(255,111,165,.7);line-height:1.1;margin-bottom:10px}
-  h2{font-size:clamp(1.4rem,6vw,1.8rem);color:var(--pink2);line-height:1.2;margin-bottom:10px}
-  p{font-size:1.08rem;line-height:1.5;margin-bottom:12px;color:#fde9f3}
+  h2{font-size:clamp(1.35rem,6vw,1.8rem);color:var(--pink2);line-height:1.2;margin-bottom:10px}
+  p{font-size:1.06rem;line-height:1.5;margin-bottom:12px;color:#fde9f3}
   .soft{color:var(--lav)}
   .btn{
     font-family:inherit;font-weight:800;font-size:1.15rem;border:none;border-radius:999px;
@@ -48,49 +44,53 @@
   }
   .btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c94b7f}
 
-  /* caminito tierra - luna */
   .trip{position:relative;height:64px;margin:14px 0 18px;border-radius:999px;
         background:rgba(255,255,255,.06);border:1px dashed rgba(255,182,213,.35)}
-  .trip .earth,.trip .moon{position:absolute;top:50%;transform:translateY(-50%);font-size:34px}
+  .trip .earth,.trip .moon{position:absolute;top:50%;transform:translateY(-50%);font-size:32px}
   .trip .earth{left:8px}.trip .moon{right:8px;filter:drop-shadow(0 0 10px #fff6b0)}
   .walker{position:absolute;top:50%;margin-top:-18px;font-size:30px;animation:walk 9s linear infinite}
   .walker span{display:inline-block;animation:bob .35s ease-in-out infinite alternate}
   @keyframes walk{
-    0%{left:14%;transform:scaleX(-1)} 48%{left:74%;transform:scaleX(-1)}
-    50%{left:74%;transform:scaleX(1)} 98%{left:14%;transform:scaleX(1)} 100%{left:14%;transform:scaleX(-1)}
+    0%{left:14%;transform:scaleX(-1)} 48%{left:72%;transform:scaleX(-1)}
+    50%{left:72%;transform:scaleX(1)} 98%{left:14%;transform:scaleX(1)} 100%{left:14%;transform:scaleX(-1)}
   }
   @keyframes bob{to{transform:translateY(-4px)}}
 
-  /* juego */
   #game{padding:0}
   #stage{position:absolute;inset:0}
   #cv{width:100%;height:100%;display:block;touch-action:none}
-  #hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
-       padding:12px 14px;font-weight:800;font-size:1.05rem;pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.5)}
-  #hud .pill{background:rgba(0,0,0,.28);padding:4px 12px;border-radius:999px}
-  #bar{position:absolute;top:52px;left:14px;right:14px;display:none;align-items:center;gap:8px;pointer-events:none}
+  #hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:8px;
+       padding:max(12px,env(safe-area-inset-top)) 12px 0;font-weight:800;font-size:1rem;pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+  #hud .pill{background:rgba(0,0,0,.3);padding:4px 12px;border-radius:999px;white-space:nowrap}
+  #bar{position:absolute;top:calc(max(12px,env(safe-area-inset-top)) + 40px);left:14px;right:14px;display:none;align-items:center;gap:8px;pointer-events:none;font-size:18px}
   #bar .track{flex:1;height:10px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
   #fill{height:100%;width:0;background:linear-gradient(90deg,#ff9ecb,#fff3a8);border-radius:999px}
-  #overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:16px;
-           background:rgba(13,8,38,.55)}
+  #overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(13,8,38,.6)}
   #overlay.show{display:flex}
-  #ovEmoji{font-size:54px;margin-bottom:6px}
+  #ovEmoji{font-size:50px;margin-bottom:6px}
+  .dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
+  .dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2)}
+  .dots span.on{background:var(--pink)}
+  .dots span.done{background:var(--pink2)}
 
-  /* pregunta */
   .tiny{font-size:.85rem;color:var(--lav);margin-top:-4px;margin-bottom:22px}
   .btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;min-height:70px}
-  #yes{position:relative;z-index:5;transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+  #question .card{overflow:visible;max-height:none}
+  #yes{position:relative;z-index:5;white-space:normal;max-width:calc(100vw - 48px);line-height:1.15;transition:font-size .3s cubic-bezier(.2,1.5,.4,1), padding .3s}
   #no{background:linear-gradient(135deg,#8c86a8,#b3aecb);box-shadow:0 6px 0 #5f5a78;z-index:6;
       transition:left .25s ease, top .25s ease, transform .25s ease}
   #teasing{min-height:26px;margin-top:18px;font-weight:700;color:var(--pink2)}
-  .big-emoji{font-size:58px;margin-bottom:6px}
-  .firma{font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--pink2);margin-top:6px}
+  .big-emoji{font-size:54px;margin-bottom:6px}
+  .quote{font-family:'Dancing Script',cursive;font-size:1.65rem;line-height:1.3;color:#fff3a8;
+         margin:10px 0 16px;min-height:4.2em;display:flex;align-items:center;justify-content:center;
+         transition:opacity .6s;text-shadow:0 0 14px rgba(255,243,168,.35)}
+  .firma{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--pink2);margin-top:6px}
 </style>
 </head>
 <body>
 <div id="sky"></div>
 
-<!-- INTRO -->
+<!-- INICIO -->
 <section id="intro" class="screen active">
   <div class="card">
     <h1>Para Ana Paula</h1>
@@ -101,7 +101,7 @@
     </div>
     <p>Te quiero desde aquí hasta la luna… <b>con pasitos de tortuga</b> 🐢, ida y vuelta.</p>
     <p>Sé que aún nos estamos conociendo, pero estar a tu lado me hace muy feliz, aunque a veces no lo sepa demostrar bien.</p>
-    <p class="soft">Te hice un par de jueguitos. Pasa los dos niveles y al final te espera una preguntita 💌</p>
+    <p class="soft">Te hice 5 jueguitos. Pásalos todos y al final te espera una preguntita 💌</p>
     <button class="btn" id="startBtn">Empezar ✨</button>
   </div>
 </section>
@@ -111,9 +111,10 @@
   <div id="stage">
     <canvas id="cv"></canvas>
     <div id="hud"><div class="pill" id="hudL"></div><div class="pill" id="hudR"></div></div>
-    <div id="bar"><span>🌍</span><div class="track"><div id="fill"></div></div><span>🌕</span></div>
+    <div id="bar"><span id="barA">🌍</span><div class="track"><div id="fill"></div></div><span id="barB">🌕</span></div>
     <div id="overlay">
       <div class="card">
+        <div class="dots" id="dots"></div>
         <div id="ovEmoji"></div>
         <h2 id="ovTitle"></h2>
         <p id="ovText"></p>
@@ -143,8 +144,9 @@
     <div class="big-emoji">🥰🐢🌕</div>
     <h1>¡Sabía que sí!</h1>
     <p>Te quiero desde aquí hasta la luna, con pasitos de tortuga, ida y vuelta.</p>
+    <div class="quote" id="quote">“Contigo, hasta los pasitos de tortuga se sienten como volar.”</div>
     <p>Espero que te haya gustado, <b>Ana Paula</b>. Lo hice yo solito, con mucho amor, para que no te aburras en tu viajecito ✈️💖</p>
-    <div class="firma">— con cariño, para ti</div>
+    <div class="firma">— hecho con todo mi cariño, solo para ti</div>
     <button class="btn" id="againBtn" style="margin-top:16px">Volver a jugar 🔁</button>
   </div>
 </section>
@@ -152,18 +154,21 @@
 <script>
 const $ = id => document.getElementById(id);
 const pick = a => a[Math.floor(Math.random()*a.length)];
+const rand = (a,b) => a + Math.random()*(b-a);
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $(id).classList.add('active');
 }
+function vibrate(ms){ try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} }
 
 /* ---------- cielo de fondo ---------- */
-const sky = $('sky');
+const sky=$('sky');
 for(let i=0;i<70;i++){
-  const s=document.createElement('div'); s.className='star';
+  const d=document.createElement('div'); d.className='star';
   const r=Math.random()*2+1;
-  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${r}px;height:${r}px;animation-delay:${Math.random()*3}s`;
-  sky.appendChild(s);
+  d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${r}px;height:${r}px;animation-delay:${Math.random()*3}s`;
+  sky.appendChild(d);
 }
 function floatHeart(){
   const e=document.createElement('span'); e.className='floaty';
@@ -174,251 +179,542 @@ function floatHeart(){
 }
 let heartTimer=setInterval(floatHeart,900);
 
-/* ---------- motor del juego ---------- */
+/* ---------- lienzo ---------- */
 const cv=$('cv'), ctx=cv.getContext('2d');
-let W=0,H=0,DPR=1;
+let W=1,H=1,DPR=1,S=1;
 function resize(){
   const r=$('stage').getBoundingClientRect();
   DPR=Math.min(window.devicePixelRatio||1,2);
-  W=r.width; H=r.height;
-  cv.width=W*DPR; cv.height=H*DPR;
+  W=Math.max(1,r.width); H=Math.max(1,r.height);
+  cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
   ctx.setTransform(DPR,0,0,DPR,0,0);
+  S=clamp(Math.min(W,H)/400,.8,1.5);
+  if(cur && cur.layout) cur.layout();
 }
 addEventListener('resize',()=>{ if($('game').classList.contains('active')) resize(); });
 
-const pointer={x:null,y:null};
-function setP(e){ const r=cv.getBoundingClientRect(); pointer.x=e.clientX-r.left; pointer.y=e.clientY-r.top; }
-cv.addEventListener('pointerdown',setP);
-cv.addEventListener('pointermove',setP);
+/* Emojis pre-dibujados a tamaño fijo: en celulares los emojis muy grandes
+   dibujados directo en el canvas a veces no aparecen. */
+const spriteCache={};
+function sprite(ch){
+  if(spriteCache[ch]) return spriteCache[ch];
+  const B=128, c=document.createElement('canvas'); c.width=c.height=B*1.3;
+  const x=c.getContext('2d');
+  x.font=`${B}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Android Emoji",sans-serif`;
+  x.textAlign='center'; x.textBaseline='middle';
+  x.fillText(ch,c.width/2,c.height/2+B*.06);
+  return spriteCache[ch]=c;
+}
+function emoji(ch,x,y,size,rot=0,flip=false){
+  const c=sprite(ch), d=size*1.3;
+  ctx.save(); ctx.translate(x,y);
+  if(rot) ctx.rotate(rot);
+  if(flip) ctx.scale(-1,1);
+  ctx.drawImage(c,-d/2,-d/2,d,d);
+  ctx.restore();
+}
+function rrect(x,y,w,h,r){
+  ctx.beginPath(); ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h); ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r); ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+}
+function drawMoon(x,y,r){
+  const glow=ctx.createRadialGradient(x,y,r*.8,x,y,r*1.6);
+  glow.addColorStop(0,'rgba(255,246,176,.35)'); glow.addColorStop(1,'rgba(255,246,176,0)');
+  ctx.fillStyle=glow; ctx.beginPath(); ctx.arc(x,y,r*1.6,0,Math.PI*2); ctx.fill();
+  const g=ctx.createRadialGradient(x-r*.3,y-r*.3,r*.1,x,y,r);
+  g.addColorStop(0,'#fffbe6'); g.addColorStop(1,'#f0d98a');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(200,170,90,.35)';
+  [[-.35,-.2,.18],[.3,.1,.22],[-.1,.45,.12],[.35,-.45,.1],[-.5,.25,.08]].forEach(([a,b,c])=>{
+    ctx.beginPath(); ctx.arc(x+a*r,y+b*r,c*r,0,Math.PI*2); ctx.fill();
+  });
+}
+function drawEarth(x,y,r){
+  const glow=ctx.createRadialGradient(x,y,r*.9,x,y,r*1.25);
+  glow.addColorStop(0,'rgba(120,190,255,.35)'); glow.addColorStop(1,'rgba(120,190,255,0)');
+  ctx.fillStyle=glow; ctx.beginPath(); ctx.arc(x,y,r*1.25,0,Math.PI*2); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.clip();
+  const g=ctx.createRadialGradient(x-r*.3,y-r*.3,r*.1,x,y,r);
+  g.addColorStop(0,'#7cc7ff'); g.addColorStop(1,'#2a6fd6');
+  ctx.fillStyle=g; ctx.fillRect(x-r,y-r,r*2,r*2);
+  ctx.fillStyle='#5fcf7a';
+  [[-.35,-.3,.35,.22],[.3,.15,.3,.35],[-.2,.45,.28,.15],[.45,-.45,.15,.12]].forEach(([a,b,c,d])=>{
+    ctx.beginPath(); ctx.ellipse(x+a*r,y+b*r,c*r,d*r,.4,0,Math.PI*2); ctx.fill();
+  });
+  ctx.restore();
+}
+function drawMeteor(m){
+  const {x,y,r}=m;
+  const g=ctx.createLinearGradient(x,y-r*3.4,x,y);
+  g.addColorStop(0,'rgba(255,140,60,0)'); g.addColorStop(1,'rgba(255,190,90,.9)');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.moveTo(x-r*.85,y); ctx.lineTo(x,y-r*3.6); ctx.lineTo(x+r*.85,y); ctx.fill();
+  ctx.save(); ctx.translate(x,y); ctx.rotate(m.rot);
+  ctx.fillStyle='#c0906c'; ctx.strokeStyle='#ffe0b8'; ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let i=0;i<8;i++){ const a=i/8*Math.PI*2, rr=r*m.shape[i]; i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr); }
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#8f6548';
+  ctx.beginPath(); ctx.arc(-r*.3,-r*.2,r*.22,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(r*.3,r*.25,r*.16,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+}
+function drawBubble(b){
+  const r=b.r;
+  const g=ctx.createRadialGradient(b.x-r*.3,b.y-r*.3,r*.1,b.x,b.y,r);
+  g.addColorStop(0,b.bad?'rgba(210,210,225,.4)':'rgba(255,210,235,.4)');
+  g.addColorStop(1,b.bad?'rgba(110,110,135,.3)':'rgba(255,111,165,.22)');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(b.x,b.y,r,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle=b.bad?'rgba(220,220,235,.75)':'rgba(255,225,242,.95)'; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.75)';
+  ctx.beginPath(); ctx.ellipse(b.x-r*.42,b.y-r*.45,r*.18,r*.1,-.6,0,Math.PI*2); ctx.fill();
+  emoji(b.ch,b.x,b.y,r*1.05);
+}
+function drawRock(o,gy){
+  const {x,w,h}=o;
+  ctx.fillStyle='#7a72a3'; ctx.strokeStyle='#c9c2ec'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(x,gy); ctx.lineTo(x+w*.1,gy-h*.65); ctx.lineTo(x+w*.35,gy-h);
+  ctx.lineTo(x+w*.7,gy-h*.88); ctx.lineTo(x+w*.95,gy-h*.45); ctx.lineTo(x+w,gy); ctx.closePath();
+  ctx.fill(); ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.35)';
+  ctx.beginPath(); ctx.moveTo(x+w*.25,gy-h*.7); ctx.lineTo(x+w*.4,gy-h*.9); ctx.stroke();
+}
+
+/* ---------- estado y entrada ---------- */
+let cur=null, L=0, G={}, running=false, gameActive=false, particles=[], shakeT=0, now=0;
 const keys={};
+const bgStars=Array.from({length:90},()=>({x:Math.random(),y:Math.random(),r:Math.random()*2+.6,p:Math.random()*6,sp:.3+Math.random()*1.2}));
+const HEARTS=['❤️','💖','💕','💗','🌸'];
+
+function pos(e){ const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+let pdown=false;
+cv.addEventListener('pointerdown',e=>{
+  e.preventDefault(); pdown=true;
+  try{ cv.setPointerCapture(e.pointerId); }catch(_){}
+  const p=pos(e); if(running && cur.down) cur.down(p.x,p.y);
+});
+cv.addEventListener('pointermove',e=>{
+  if(!pdown) return; e.preventDefault();
+  const p=pos(e); if(running && cur.move) cur.move(p.x,p.y);
+});
+function pup(){ pdown=false; if(cur && cur.up) cur.up(); }
+cv.addEventListener('pointerup',pup); cv.addEventListener('pointercancel',pup);
+document.addEventListener('touchmove',e=>{ if($('game').classList.contains('active')) e.preventDefault(); },{passive:false});
 addEventListener('keydown',e=>{
-  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){ keys[e.key]=true; pointer.x=pointer.y=null; e.preventDefault(); }
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)){
+    if(!keys[e.key] && running && cur.jump && (e.key===' '||e.key==='ArrowUp')) cur.jump();
+    keys[e.key]=true; e.preventDefault();
+  }
 });
 addEventListener('keyup',e=>{ keys[e.key]=false; });
 
-function emoji(ch,x,y,size,rot=0,flip=false){
-  ctx.save(); ctx.translate(x,y); if(rot) ctx.rotate(rot); if(flip) ctx.scale(-1,1);
-  ctx.font=`${size}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
-  ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(ch,0,0); ctx.restore();
-}
-
-let level=1, running=false, gameActive=false;
-let items=[], particles=[], lives=3, score=0, goal=15, stars=0;
-let player={x:0,y:0,s:60}, spawnT=0, t=0, now=0, shakeT=0, invUntil=0, progress=0, faceRight=true;
-const DUR2=32;
-const bgStars=Array.from({length:90},()=>({x:Math.random(),y:Math.random(),r:Math.random()*2+.6,p:Math.random()*6,sp:.3+Math.random()*1.2}));
-
 function burst(x,y,chars,n=8){
   for(let i=0;i<n;i++){
-    const a=Math.random()*Math.PI*2, v=60+Math.random()*140;
-    particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-40,life:1,ch:pick(chars),s:14+Math.random()*12});
+    const a=Math.random()*Math.PI*2, v=(60+Math.random()*140)*S;
+    particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-40,life:1,ch:pick(chars),s:(14+Math.random()*12)*S,grav:120});
   }
 }
-
-/* ---- Nivel 1: lluvia de corazones ---- */
-function setupL1(){
-  level=1; items=[]; particles=[]; lives=3; score=0; t=0; spawnT=.5;
-  player={x:W/2,y:H-70,s:Math.min(66,Math.max(48,W*.14))};
-  pointer.x=pointer.y=null; $('bar').style.display='none';
+function hurt(){
+  if(G.t<G.inv) return false;
+  G.lives--; G.inv=G.t+1.2; shakeT=.3; vibrate(70);
+  if(G.lives<=0){ running=false; setTimeout(lose,450); }
+  return true;
 }
-function update1(dt){
-  t+=dt; spawnT-=dt;
-  player.y=H-70;
-  if(spawnT<=0){
-    spawnT=Math.max(.42,.85-t*.012);
-    const bad=Math.random()<.27;
-    items.push({x:30+Math.random()*(W-60),y:-30,v:130+Math.random()*80+t*3,
-      ch:bad?pick(['💔','🌧️']):pick(['❤️','💖','💕','💗','🌸']),bad,r:0,vr:(Math.random()-.5)*2,s:36});
-  }
-  const ox=player.x;
-  if(keys.ArrowLeft) player.x-=430*dt;
-  if(keys.ArrowRight) player.x+=430*dt;
-  if(pointer.x!=null) player.x+=(pointer.x-player.x)*Math.min(1,dt*12);
-  player.x=Math.max(30,Math.min(W-30,player.x));
-  if(Math.abs(player.x-ox)>.5) faceRight=player.x>ox;
+const blink=()=>G.t<G.inv && Math.floor(now/100)%2===0;
 
-  const bx=player.x, by=player.y-player.s*.55;
-  for(let i=items.length-1;i>=0;i--){
-    const it=items[i]; it.y+=it.v*dt; it.r+=it.vr*dt;
-    if(Math.hypot(it.x-bx,it.y-by)<player.s*.5+12){
-      items.splice(i,1);
-      if(it.bad){ lives--; shakeT=.3; burst(it.x,it.y,['💨','💧'],6); }
-      else { score++; burst(it.x,it.y,['💖','✨','💕'],8); }
-      continue;
+/* arrastre relativo: el dedo puede ir a cualquier parte de la pantalla
+   sin tapar a la tortuguita */
+const dragX={
+  down(x){ G.drag={x0:x,p0:G.tx}; },
+  move(x){ if(G.drag) G.tx=G.drag.p0+(x-G.drag.x0)*1.5; },
+  up(){ G.drag=null; }
+};
+function steer(dt){
+  if(keys.ArrowLeft) G.tx-=460*S*dt;
+  if(keys.ArrowRight) G.tx+=460*S*dt;
+  G.tx=clamp(G.tx,28*S,W-28*S);
+  const ox=G.px; G.px+=(G.tx-G.px)*Math.min(1,dt*14);
+  if(Math.abs(G.px-ox)>.3) G.face=G.px>ox;
+}
+function hint(txt){
+  if(G.t>3.5) return;
+  ctx.globalAlpha=Math.min(1,(3.5-G.t)); ctx.fillStyle='#fff';
+  ctx.font=`700 ${16*S}px "Baloo 2",sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(txt,W/2,H*.55); ctx.globalAlpha=1;
+}
+
+/* ================= NIVEL 1: lluvia de corazones ================= */
+const L1={
+  lives:true,
+  intro:['🧺🐢','Lluvia de corazones',
+    'Desliza tu dedo por <b>cualquier parte</b> de la pantalla para mover a la tortuguita y atrapa <b>15 corazones</b>. Esquiva los 💔 y las nubecitas 🌧️.','¡Jugar! 💖'],
+  win:['💖','¡Lo lograste, Ana Paula!','Atrapaste todos los corazones… aunque el mío ya lo tenías 🙈'],
+  setup(){ G.items=[]; G.score=0; G.goal=15; G.spawn=.6; G.px=G.tx=W/2; G.face=true; },
+  ...dragX,
+  update(dt){
+    steer(dt);
+    const py=H-70*S, bx=G.px, by=py-40*S;
+    G.spawn-=dt;
+    if(G.spawn<=0){
+      G.spawn=Math.max(.45,.9-G.t*.012);
+      const bad=Math.random()<.26;
+      G.items.push({x:rand(30*S,W-30*S),y:-30,v:H*rand(.24,.34)+G.t*4,ch:bad?pick(['💔','🌧️']):pick(HEARTS),bad,r:0,vr:rand(-1,1)});
     }
-    if(it.y>H+40) items.splice(i,1);
-  }
-  if(score>=goal){ running=false; burst(player.x,player.y-40,['💖','✨','🌸','💕'],30); winL1(); }
-  else if(lives<=0){ running=false; lose(); }
-}
-function draw1(){
-  emoji('🌙',W-46,70,46);
-  ctx.fillStyle='#3b2a6e'; ctx.beginPath(); ctx.ellipse(W/2,H+30,W*.85,80,0,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#4d3887'; ctx.beginPath(); ctx.ellipse(W*.2,H+40,W*.5,70,0,0,Math.PI*2); ctx.fill();
-  for(const it of items) emoji(it.ch,it.x,it.y,it.s,it.r*.3);
-  const bob=Math.sin(now*.012)*3;
-  emoji('🧺',player.x,player.y-player.s*.55+bob,player.s*.72);
-  emoji('🐢',player.x,player.y+bob,player.s,0,faceRight);
-  $('hudL').textContent=`💖 ${score} / ${goal}`;
-}
-
-/* ---- Nivel 2: pasitos hasta la luna ---- */
-function setupL2(){
-  level=2; items=[]; particles=[]; lives=3; t=0; spawnT=1.2; invUntil=0; progress=0; stars=0;
-  player={x:Math.max(60,W*.18),y:H/2,s:Math.min(60,Math.max(44,H*.1))};
-  pointer.x=pointer.y=null; $('bar').style.display='flex';
-}
-function update2(dt){
-  t+=dt; progress=Math.min(1,t/DUR2);
-  spawnT-=dt;
-  if(spawnT<=0 && progress<.92){
-    spawnT=.95-progress*.4+Math.random()*.35;
-    const star=Math.random()<.25;
-    items.push({x:W+40,y:90+Math.random()*(H-130),v:W*.32+progress*W*.28+Math.random()*60,
-      ch:star?'⭐':pick(['☄️','🪨','🌑']),bad:!star,s:star?30:38+Math.random()*14,r:0,vr:(Math.random()-.5)*3});
-  }
-  if(keys.ArrowUp) player.y-=380*dt;
-  if(keys.ArrowDown) player.y+=380*dt;
-  if(pointer.y!=null) player.y+=(pointer.y-player.y)*Math.min(1,dt*9);
-  player.y=Math.max(90,Math.min(H-30,player.y));
-  if(Math.random()<.3) particles.push({x:player.x-player.s*.45,y:player.y+(Math.random()-.5)*10,vx:-80,vy:(Math.random()-.5)*30,life:.7,ch:pick(['✨','💗']),s:12});
-
-  for(let i=items.length-1;i>=0;i--){
-    const it=items[i]; it.x-=it.v*dt; it.r+=it.vr*dt;
-    if(Math.hypot(it.x-player.x,it.y-player.y)<player.s*.38+it.s*.38){
-      if(!it.bad){ stars++; items.splice(i,1); burst(it.x,it.y,['⭐','✨'],8); continue; }
-      if(t>invUntil){ lives--; invUntil=t+1.3; shakeT=.35; items.splice(i,1); burst(player.x,player.y,['💫','💨'],8); continue; }
+    for(let i=G.items.length-1;i>=0;i--){
+      const it=G.items[i]; it.y+=it.v*dt; it.r+=it.vr*dt;
+      if(Math.hypot(it.x-bx,it.y-by)<38*S){
+        G.items.splice(i,1);
+        if(it.bad){ hurt(); burst(it.x,it.y,['💨','💧'],6); }
+        else { G.score++; burst(it.x,it.y,['💖','✨','💕'],8); if(G.score>=G.goal) win(); }
+        continue;
+      }
+      if(it.y>H+40) G.items.splice(i,1);
     }
-    if(it.x<-60) items.splice(i,1);
-  }
-  if(lives<=0){ running=false; lose(); }
-  else if(progress>=1){ running=false; burst(player.x,player.y,['💖','🌕','✨','⭐'],35); winL2(); }
-}
-function draw2(){
-  const ep=1-progress;
-  if(ep>.03){ ctx.globalAlpha=ep; emoji('🌍',30*ep,H-30,60+140*ep); ctx.globalAlpha=1; }
-  const ms=50+progress*progress*H*.8, mx=W-ms*.25+(1-progress)*10, my=H*.52;
-  const g=ctx.createRadialGradient(mx,my,ms*.2,mx,my,ms*1.1);
-  g.addColorStop(0,'rgba(255,246,176,.35)'); g.addColorStop(1,'rgba(255,246,176,0)');
-  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(mx,my,ms*1.1,0,Math.PI*2); ctx.fill();
-  emoji('🌕',mx,my,ms);
-  for(const it of items) emoji(it.ch,it.x,it.y,it.s,it.r*.4);
-  const blink = t<invUntil && Math.floor(now/100)%2===0;
-  if(!blink) emoji('🐢',player.x,player.y+Math.sin(now*.01)*3,player.s,-.12,true);
-  $('hudL').textContent=`⭐ ${stars}`;
-  $('fill').style.width=(progress*100)+'%';
-}
+  },
+  draw(){
+    drawMoon(W-50*S,80*S,24*S);
+    ctx.fillStyle='#3b2a6e'; ctx.beginPath(); ctx.ellipse(W/2,H+30,W*.85,80*S,0,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#4d3887'; ctx.beginPath(); ctx.ellipse(W*.2,H+40,W*.5,70*S,0,0,Math.PI*2); ctx.fill();
+    for(const it of G.items) emoji(it.ch,it.x,it.y,36*S,it.r*.3);
+    const py=H-70*S, bob=Math.sin(now*.012)*3;
+    if(!blink()){
+      emoji('🧺',G.px,py-40*S+bob,46*S);
+      emoji('🐢',G.px,py+bob,60*S,0,G.face);
+    }
+    hint('👆 desliza el dedo a los lados');
+  },
+  hud(){ return `💖 ${G.score}/${G.goal}`; }
+};
 
-/* ---- dibujo general ---- */
+/* ================= NIVEL 2: burbujitas ================= */
+const L2={
+  lives:true,
+  intro:['💗✨','Burbujitas de amor',
+    'Toca las burbujitas con corazones para reventarlas. Revienta <b>20</b>, pero no toques las grises con 💔.','¡A reventar! 💥'],
+  win:['💥💖','¡Reventaste todas!','Igualito a como revientan mis nervios cada vez que te veo 😳'],
+  setup(){ G.b=[]; G.score=0; G.goal=20; G.spawn=.3; },
+  down(x,y){
+    for(let i=G.b.length-1;i>=0;i--){
+      const b=G.b[i];
+      if(Math.hypot(x-b.x,y-b.y)<b.r*1.25){
+        G.b.splice(i,1);
+        if(b.bad){ hurt(); burst(b.x,b.y,['💨','💧'],6); }
+        else { G.score++; vibrate(15); burst(b.x,b.y,['💖','✨','💕'],10); if(G.score>=G.goal) win(); }
+        return;
+      }
+    }
+  },
+  update(dt){
+    G.spawn-=dt;
+    if(G.spawn<=0){
+      G.spawn=Math.max(.4,.72-G.t*.008);
+      const bad=Math.random()<.22, r=rand(28,40)*S;
+      G.b.push({x:rand(r+8,W-r-8),y:H+r,r,vy:-(H*rand(.15,.25)+G.t*2),ph:Math.random()*6,bad,
+        ch:bad?'💔':pick(['💖','💕','💗','🌸','🐢','⭐'])});
+    }
+    for(let i=G.b.length-1;i>=0;i--){
+      const b=G.b[i]; b.y+=b.vy*dt; b.ph+=dt*2; b.x+=Math.sin(b.ph)*22*S*dt;
+      if(b.y<-b.r-10) G.b.splice(i,1);
+    }
+  },
+  draw(){
+    for(const b of G.b) drawBubble(b);
+    hint('👆 toca las burbujitas');
+  },
+  hud(){ return `💥 ${G.score}/${G.goal}`; }
+};
+
+/* ================= NIVEL 3: hasta la luna ================= */
+const L3={
+  lives:true, bar:['🌍','🌕'], scroll:'down',
+  intro:['🐢🌕','Pasitos hasta la luna',
+    'Desliza tu dedo a los lados para guiar a la tortuguita hasta la luna y esquivar los meteoritos ☄️. Las ⭐ son de regalo.','¡Despegar! 🚀'],
+  win:['🌕✨','¡Llegaste a la luna!','Así de lejos te quiero, Ana Paula… pero todavía falta la vuelta 🐢'],
+  setup(){ G.m=[]; G.px=G.tx=W/2; G.spawn=1; G.prog=0; G.stars=0; G.dur=30; },
+  ...dragX,
+  update(dt){
+    G.prog=Math.min(1,G.t/G.dur);
+    steer(dt);
+    const py=H*.8;
+    if(Math.random()<.5) particles.push({x:G.px+rand(-6,6)*S,y:py+26*S,vx:rand(-20,20),vy:140*S,life:.4,ch:pick(['✨','🔥']),s:13*S,grav:0});
+    G.spawn-=dt;
+    if(G.spawn<=0 && G.prog<.93){
+      G.spawn=.8-G.prog*.3+Math.random()*.35;
+      const star=Math.random()<.22, r=star?16*S:rand(16,27)*S;
+      G.m.push({x:rand(r+6,W-r-6),y:-r-10,r,star,vy:H*(.3+G.prog*.22)+rand(0,60)*S,vx:rand(-18,18)*S,
+        rot:Math.random()*6,vr:rand(-2,2),shape:Array.from({length:8},()=>rand(.78,1.06))});
+    }
+    for(let i=G.m.length-1;i>=0;i--){
+      const m=G.m[i]; m.y+=m.vy*dt; m.x+=m.vx*dt; m.rot+=m.vr*dt;
+      const d=Math.hypot(m.x-G.px,m.y-py);
+      if(m.star){ if(d<m.r+24*S){ G.stars++; G.m.splice(i,1); burst(m.x,m.y,['⭐','✨'],8); continue; } }
+      else if(d<m.r*.85+18*S){ if(hurt()){ burst(G.px,py,['💫','💨'],8); G.m.splice(i,1); continue; } }
+      if(m.y>H+m.r+40) G.m.splice(i,1);
+    }
+    if(G.prog>=1) win();
+  },
+  draw(){
+    const er=(1-G.prog)*Math.max(W,H)*.55;
+    if(er>4) drawEarth(W/2,H+er*.55,er);
+    const mr=22*S+G.prog*G.prog*Math.min(W,H)*.45;
+    drawMoon(W/2,110*S+mr*.2,mr);
+    for(const m of G.m) m.star?emoji('⭐',m.x,m.y,m.r*2,m.rot*.3):drawMeteor(m);
+    const py=H*.8;
+    if(!blink()) emoji('🐢',G.px,py+Math.sin(now*.01)*3,54*S,Math.PI/2);
+    hint('👆 desliza el dedo a los lados');
+  },
+  hud(){ return `⭐ ${G.stars}`; }
+};
+
+/* ================= NIVEL 4: parejitas ================= */
+const L4={
+  lives:false,
+  intro:['🃏🐢','Parejitas',
+    'Toca las cartitas para voltearlas y encuentra las <b>6 parejitas</b>. Sin prisa, a pasito de tortuga 🐢','¡A jugar! 🃏'],
+  win:['🧠💖','¡Qué memoria, Ana Paula!','Encontraste todas las parejitas… y yo sigo sin poder olvidar tu sonrisa 😊'],
+  setup(){
+    const base=['🐢','🌙','💖','🌸','⭐','🍓'];
+    const d=[...base,...base];
+    for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+    G.cards=d.map(ch=>({ch,st:0,f:0,pulse:0})); G.open=[]; G.hideT=0; G.moves=0; G.found=0;
+    this.layout();
+  },
+  layout(){
+    if(!G.cards) return;
+    const cols=W<H?3:4, rows=12/cols, gap=10*S, top=70, bot=24, aw=W-32, ah=H-top-bot;
+    const cw=Math.min((aw-(cols-1)*gap)/cols,((ah-(rows-1)*gap)/rows)*.8,120*S), chh=cw/.8;
+    const gx=(W-(cols*cw+(cols-1)*gap))/2, gy=top+(ah-(rows*chh+(rows-1)*gap))/2;
+    G.cards.forEach((c,i)=>{ c.x=gx+(i%cols)*(cw+gap); c.y=gy+Math.floor(i/cols)*(chh+gap); c.w=cw; c.h=chh; });
+  },
+  down(x,y){
+    if(G.hideT>0 || G.open.length>=2) return;
+    const c=G.cards.find(c=>x>=c.x&&x<=c.x+c.w&&y>=c.y&&y<=c.y+c.h);
+    if(!c || c.st!==0) return;
+    c.st=1; G.open.push(c); vibrate(10);
+    if(G.open.length===2){
+      G.moves++;
+      const [a,b]=G.open;
+      if(a.ch===b.ch){
+        a.st=b.st=2; a.pulse=b.pulse=1; G.found++; G.open=[];
+        burst(a.x+a.w/2,a.y+a.h/2,['💖','✨'],8); burst(b.x+b.w/2,b.y+b.h/2,['💖','✨'],8);
+        if(G.found===6) setTimeout(win,500);
+      } else G.hideT=.85;
+    }
+  },
+  update(dt){
+    for(const c of G.cards){
+      const tg=c.st>0?1:0;
+      c.f+=clamp(tg-c.f,-dt*5,dt*5);
+      c.pulse=Math.max(0,c.pulse-dt*2);
+    }
+    if(G.hideT>0){ G.hideT-=dt; if(G.hideT<=0){ G.open.forEach(c=>c.st=0); G.open=[]; } }
+  },
+  draw(){
+    for(const c of G.cards){
+      const sc=Math.max(.03,Math.abs(Math.cos(c.f*Math.PI))), face=c.f>.5, p=1+c.pulse*.1;
+      ctx.save(); ctx.translate(c.x+c.w/2,c.y+c.h/2); ctx.scale(sc*p,p);
+      rrect(-c.w/2,-c.h/2,c.w,c.h,12*S);
+      if(face){
+        ctx.fillStyle=c.st===2?'#fff4d6':'#fff6fb'; ctx.fill();
+        ctx.lineWidth=3; ctx.strokeStyle=c.st===2?'#ffd66b':'#ffb3d1'; ctx.stroke();
+        emoji(c.ch,0,0,c.w*.55);
+      } else {
+        const g=ctx.createLinearGradient(-c.w/2,-c.h/2,c.w/2,c.h/2);
+        g.addColorStop(0,'#ff6fa5'); g.addColorStop(1,'#b27cff');
+        ctx.fillStyle=g; ctx.fill();
+        ctx.lineWidth=3; ctx.strokeStyle='rgba(255,255,255,.6)'; ctx.stroke();
+        ctx.globalAlpha=.85; emoji('💗',0,0,c.w*.38); ctx.globalAlpha=1;
+      }
+      ctx.restore();
+    }
+  },
+  hud(){ return `🃏 ${G.found}/6`; },
+  hudR(){ return `Intentos: ${G.moves}`; }
+};
+
+/* ================= NIVEL 5: de vuelta ================= */
+const L5={
+  lives:true, bar:['🌕','🌍'], scroll:'left',
+  intro:['🐢🏡','De vuelta, pasito a pasito',
+    'Ahora toca volver. <b>Toca la pantalla</b> para que la tortuguita salte las rocas (¡puede hacer doble salto!). Atrapa los 💖 del camino.','¡Vamos! 🐢'],
+  win:['🌍💖','¡Ida y vuelta!','Desde aquí hasta la luna y de regreso, con pasitos de tortuga. Así te quiero, Ana Paula 🐢💖'],
+  setup(){ G.py=0; G.vy=0; G.jumps=0; G.rocks=[]; G.hearts=[]; G.spawn=1.4; G.hs=1.8; G.prog=0; G.dur=28; G.love=0; G.off=0; },
+  jump(){
+    if(G.jumps<2){ G.vy=-760*S*(G.jumps?.88:1); G.jumps++; vibrate(10);
+      if(G.jumps===2) burst(W*.22,H*.72+G.py,['✨'],5); }
+  },
+  down(){ this.jump(); },
+  update(dt){
+    const gy=H*.72, px=W*.22;
+    G.prog=Math.min(1,G.t/G.dur);
+    const sp=(230+G.prog*80)*S; G.off+=sp*dt;
+    G.vy+=2100*S*dt; G.py+=G.vy*dt;
+    if(G.py>=0){ G.py=0; G.vy=0; G.jumps=0; }
+    G.spawn-=dt;
+    if(G.spawn<=0 && G.prog<.94){
+      G.spawn=1.05+Math.random()*.9-G.prog*.2;
+      G.rocks.push({x:W+10,w:rand(28,48)*S,h:rand(26,50)*S});
+    }
+    G.hs-=dt;
+    if(G.hs<=0 && G.prog<.94){ G.hs=1.3+Math.random()*1.2; G.hearts.push({x:W+20,y:gy-rand(70,160)*S}); }
+    const feet=gy+G.py, L_=px-16*S, R_=px+16*S, T_=feet-40*S, B_=feet-4*S;
+    for(let i=G.rocks.length-1;i>=0;i--){
+      const o=G.rocks[i]; o.x-=sp*dt;
+      if(!o.hit && R_>o.x+5*S && L_<o.x+o.w-5*S && B_>gy-o.h+6*S){
+        if(hurt()){ o.hit=true; burst(px,feet-20*S,['💫','💨'],8); }
+      }
+      if(o.x+o.w<-20) G.rocks.splice(i,1);
+    }
+    for(let i=G.hearts.length-1;i>=0;i--){
+      const h=G.hearts[i]; h.x-=sp*dt;
+      if(Math.hypot(h.x-px,h.y-(feet-22*S))<34*S){ G.love++; G.hearts.splice(i,1); burst(h.x,h.y,['💖','✨'],8); continue; }
+      if(h.x<-30) G.hearts.splice(i,1);
+    }
+    if(G.prog>=1) win();
+  },
+  draw(){
+    const gy=H*.72, px=W*.22;
+    drawEarth(W*.78,H*.2,(18+G.prog*70)*S);
+    const g=ctx.createLinearGradient(0,gy,0,H);
+    g.addColorStop(0,'#b7b0d6'); g.addColorStop(1,'#6d6594');
+    ctx.fillStyle=g; ctx.fillRect(0,gy,W,H-gy);
+    ctx.fillStyle='rgba(80,72,120,.45)';
+    const span=W+240;
+    for(let i=0;i<6;i++){
+      const cx=((i*190*S-G.off)%span+span)%span-120, cy=gy+(18+(i%3)*22)*S;
+      ctx.beginPath(); ctx.ellipse(cx,cy,(26+(i%2)*14)*S,7*S,0,0,Math.PI*2); ctx.fill();
+    }
+    for(const o of G.rocks) drawRock(o,gy);
+    for(const h of G.hearts) emoji('💖',h.x,h.y+Math.sin(now*.006+h.x*.02)*4,30*S);
+    const bob=G.py===0?Math.abs(Math.sin(now*.018))*-3:0;
+    if(!blink()) emoji('🐢',px,gy+G.py-22*S+bob,54*S,G.py<0?-.18:0,true);
+    hint('👆 toca para saltar');
+  },
+  hud(){ return `💖 ${G.love}`; }
+};
+
+const levels=[L1,L2,L3,L4,L5];
+
+/* ---------- dibujo general ---------- */
 function drawBg(){
   const g=ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'#241654'); g.addColorStop(1,'#0e0829');
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
   ctx.fillStyle='#fff';
   for(const s of bgStars){
-    let x=s.x*W;
-    if(level===2) x=((x-t*s.sp*70)%W+W)%W;
+    let x=s.x*W, y=s.y*H;
+    if(cur.scroll==='down') y=((y+G.t*s.sp*90)%H+H)%H;
+    if(cur.scroll==='left') x=((x-G.t*s.sp*40)%W+W)%W;
     ctx.globalAlpha=.3+.7*Math.abs(Math.sin(now*.002+s.p));
-    ctx.fillRect(x,s.y*H,s.r,s.r);
+    ctx.fillRect(x,y,s.r,s.r);
   }
   ctx.globalAlpha=1;
 }
 function drawParticles(dt){
   for(let i=particles.length-1;i>=0;i--){
-    const p=particles[i]; p.life-=dt; if(p.life<=0){particles.splice(i,1);continue;}
-    p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=120*dt;
-    ctx.globalAlpha=Math.max(0,p.life); emoji(p.ch,p.x,p.y,p.s); ctx.globalAlpha=1;
+    const p=particles[i]; p.life-=dt; if(p.life<=0){ particles.splice(i,1); continue; }
+    p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=p.grav*dt;
+    ctx.globalAlpha=Math.max(0,Math.min(1,p.life*1.5)); emoji(p.ch,p.x,p.y,p.s); ctx.globalAlpha=1;
   }
 }
 let last=0;
 function loop(ts){
   if(!gameActive) return;
   const dt=Math.min(.033,((ts-last)/1000)||0); last=ts; now=ts;
-  if(running){ level===1?update1(dt):update2(dt); }
+  if(running){ G.t+=dt; cur.update(dt); }
   ctx.save();
-  if(shakeT>0){ shakeT-=dt; ctx.translate((Math.random()-.5)*10,(Math.random()-.5)*10); }
-  drawBg();
-  level===1?draw1():draw2();
-  drawParticles(dt);
+  if(shakeT>0){ shakeT-=dt; ctx.translate(rand(-5,5),rand(-5,5)); }
+  drawBg(); cur.draw(); drawParticles(dt);
   ctx.restore();
-  $('hudR').textContent='💗'.repeat(Math.max(0,lives))+'🤍'.repeat(3-Math.max(0,lives));
+  $('hudL').textContent=`Nivel ${L+1}/5 · `+cur.hud();
+  const lv=clamp(G.lives,0,3);
+  const r=cur.lives ? '💗'.repeat(lv)+'🤍'.repeat(3-lv) : (cur.hudR?cur.hudR():'');
+  $('hudR').textContent=r; $('hudR').style.visibility=r?'visible':'hidden';
+  if(cur.bar) $('fill').style.width=(G.prog*100)+'%';
   requestAnimationFrame(loop);
 }
 
-/* ---- pantallas entre niveles ---- */
+/* ---------- flujo de niveles ---------- */
 let ovAction=null;
 function overlay(emo,title,text,btn,action){
+  $('dots').innerHTML=levels.map((_,i)=>`<span class="${i<L?'done':i===L?'on':''}"></span>`).join('');
   $('ovEmoji').textContent=emo; $('ovTitle').textContent=title;
   $('ovText').innerHTML=text; $('ovBtn').textContent=btn;
   ovAction=action; $('overlay').classList.add('show');
 }
 $('ovBtn').onclick=()=>{ $('overlay').classList.remove('show'); const a=ovAction; ovAction=null; a&&a(); };
 
-function introL1(){
-  setupL1();
-  overlay('🧺🐢','Nivel 1: Lluvia de corazones',
-    'Mueve a la tortuguita deslizando tu dedo (o con las flechas) y atrapa <b>15 corazones</b> para ti, Ana Paula.<br>Esquiva los 💔 y las nubecitas 🌧️.',
-    '¡Jugar! 💖',()=>{ setupL1(); running=true; });
+function fresh(){ G={t:0,lives:3,inv:0}; particles=[]; cur.setup(); }
+function startLevel(i){
+  L=i; cur=levels[i]; fresh();
+  $('bar').style.display=cur.bar?'flex':'none';
+  if(cur.bar){ $('barA').textContent=cur.bar[0]; $('barB').textContent=cur.bar[1]; }
+  const [e,ti,tx,b]=cur.intro;
+  overlay(e,`Nivel ${i+1} · ${ti}`,tx,b,()=>{ fresh(); running=true; });
 }
-function winL1(){
-  overlay('💖','¡Lo lograste, Ana Paula!',
-    'Atrapaste todos los corazones… aunque el mío ya lo tenías 🙈',
-    'Siguiente nivel ➜',introL2);
-}
-function introL2(){
-  setupL2();
-  overlay('🐢🌕','Nivel 2: Pasitos hasta la luna',
-    'Guía a la tortuguita hasta la luna. Desliza tu dedo arriba y abajo para esquivar los meteoritos ☄️🪨.<br>Las ⭐ son de regalo.',
-    '¡Despegar! 🚀',()=>{ setupL2(); running=true; });
-}
-function winL2(){
-  overlay('🌕✨','¡Llegaste a la luna!',
-    'Así de lejos te quiero, Ana Paula… y de vuelta, con pasitos de tortuga 🐢',
-    'Una última cosita… 💌',()=>{ gameActive=false; show('question'); });
+function win(){
+  if(!running) return;
+  running=false; vibrate([40,60,40]);
+  burst(W/2,H/2,['💖','✨','🌸','💕','⭐'],30);
+  setTimeout(()=>{
+    const [e,ti,tx]=cur.win, lastL=L===levels.length-1;
+    overlay(e,ti,tx,lastL?'Una última cosita… 💌':'Siguiente nivel ➜',()=>{
+      if(lastL){ gameActive=false; show('question'); } else startLevel(L+1);
+    });
+  },700);
 }
 function lose(){
-  overlay('🥺','¡Uy, casi!',
-    'La tortuguita se tropezó, pero no se rinde. ¡Otra vez, tú puedes!',
-    'Reintentar 🔁',()=>{ level===1?setupL1():setupL2(); running=true; });
+  overlay('🥺','¡Uy, casi!','La tortuguita se tropezó, pero no se rinde. ¡Otra vez, tú puedes, Ana Paula!','Reintentar 🔁',
+    ()=>{ fresh(); running=true; });
 }
-
 $('startBtn').onclick=()=>{
-  show('game'); resize(); gameActive=true; last=performance.now();
-  introL1(); requestAnimationFrame(loop);
+  show('game'); cur=L1; resize(); gameActive=true; last=performance.now();
+  startLevel(0); requestAnimationFrame(loop);
 };
 
 /* ---------- la pregunta ---------- */
-let noScale=1, yesScale=1;
+let noScale=1, yesScale=1, ti=0;
 const teases=['¿Segura? 🥺','La tortuguita está triste 🐢💧','Ese botón no funciona 😌','Mejor el otro 👉','Ya casi desaparece jaja','Mira qué grande está el SÍ 💖','Tú sabes cuál es 😏'];
-let ti=0;
 function runAway(e){
   if(e) e.preventDefault();
   const no=$('no'), yes=$('yes');
   if(no.parentElement!==document.body){
     const r=no.getBoundingClientRect();
     document.body.appendChild(no);
-    no.style.position='fixed'; no.style.left=r.left+'px'; no.style.top=r.top+'px';
-    no.style.transformOrigin='top left';
+    no.style.position='fixed'; no.style.left=r.left+'px'; no.style.top=r.top+'px'; no.style.transformOrigin='top left';
   }
   noScale=Math.max(.22,noScale*.8);
-  yesScale=Math.min(3,yesScale+.22);
+  yesScale=Math.min(3,yesScale+.25);
   const bw=no.offsetWidth*noScale, bh=no.offsetHeight*noScale;
   no.style.left=(10+Math.random()*Math.max(0,innerWidth-bw-20))+'px';
   no.style.top=(10+Math.random()*Math.max(0,innerHeight-bh-20))+'px';
   no.style.transform=`scale(${noScale})`;
-  yes.style.transform=`scale(${yesScale})`;
+  yes.style.fontSize=(1.15*yesScale)+'rem';
+  yes.style.padding=`${14*yesScale}px ${30*Math.min(yesScale,1.6)}px`;
   $('teasing').textContent=teases[ti++%teases.length];
+  vibrate(20);
 }
 $('no').addEventListener('pointerenter',e=>{ if(e.pointerType==='mouse') runAway(); });
 $('no').addEventListener('pointerdown',runAway);
 $('no').addEventListener('click',runAway);
 
+/* ---------- final ---------- */
+const phrases=[
+  '“Contigo, hasta los pasitos de tortuga se sienten como volar.”',
+  '“No necesito ir a la luna para ver algo bonito: me basta con verte sonreír.”',
+  '“Vamos despacito, pero cada pasito a tu lado vale la pena.”',
+  '“Si me dieran a elegir otra vez, volvería a elegir conocerte.”',
+  '“Eres mi pensamiento favorito, incluso cuando estás de viaje.”',
+  '“Desde aquí hasta la luna, y de vuelta, todas las veces que haga falta.”'
+];
 $('yes').onclick=()=>{
-  const no=$('no'); no.style.display='none';
-  show('final');
+  $('no').style.display='none';
+  show('final'); vibrate([60,80,60]);
   clearInterval(heartTimer);
   for(let i=0;i<40;i++) setTimeout(floatHeart,i*60);
   heartTimer=setInterval(floatHeart,220);
+  let k=0; const q=$('quote');
+  setInterval(()=>{ q.style.opacity=0; setTimeout(()=>{ k=(k+1)%phrases.length; q.textContent=phrases[k]; q.style.opacity=1; },600); },4200);
 };
 $('againBtn').onclick=()=>location.reload();
 </script>
